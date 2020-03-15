@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Skr3D.Domain.Models;
 using Skr3D.Infrastruct.Data.DB;
+using Skr3D.Infrastruct.Data.Mappings;
 
 namespace Skr3D.Infrastruct.Data.Context
 {

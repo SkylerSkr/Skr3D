@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Skr3D.Domain.Interfaces;
+using Skr3D.Infrastruct.Data.Context;
 
 namespace Skr3D.Infrastruct.Data.Repository
 {
@@ -13,14 +14,14 @@ namespace Skr3D.Infrastruct.Data.Repository
     /// <typeparam name="TEntity"></typeparam>
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        //protected readonly OrderContext Db;
+        protected readonly OrderContext Db;
         protected readonly DbSet<TEntity> DbSet;
 
-        //public Repository(OrderContext context)
-        //{
-        //    Db = context;
-        //    DbSet = Db.Set<TEntity>();
-        //}
+        public Repository(OrderContext context)
+        {
+            Db = context;
+            DbSet = Db.Set<TEntity>();
+        }
 
         public virtual void Add(TEntity obj)
         {
@@ -49,13 +50,12 @@ namespace Skr3D.Infrastruct.Data.Repository
 
         public int SaveChanges()
         {
-            //return Db.SaveChanges();
-            return 1;
+            return Db.SaveChanges();
         }
 
         public void Dispose()
         {
-            //Db.Dispose();
+            Db.Dispose();
             GC.SuppressFinalize(this);
         }
     }

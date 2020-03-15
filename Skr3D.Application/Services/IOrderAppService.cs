@@ -11,7 +11,7 @@ namespace Skr3D.Application.Services
     /// </summary>
     public interface IOrderAppService : IDisposable
     {
-        void Register(OrderViewModel OrderViewModel);
-        IEnumerable<OrderViewModel> GetAll();
+        //void Register(OrderViewModel OrderViewModel);
+        //IEnumerable<OrderViewModel> GetAll();
     }
 }
