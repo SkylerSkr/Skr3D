@@ -28,8 +28,10 @@ namespace Skr3D.Infrastruct.Data.Mappings
                 .HasMaxLength(100)
                 .IsRequired();
 
+            //子订单
             builder.HasMany(c=>c.OrderItem);
 
+            //值类型
             builder.OwnsOne(x=>x.Address);
 
         }

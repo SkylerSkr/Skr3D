@@ -27,6 +27,7 @@ namespace Skr3D.Infrastruct.Data.Mappings
                 .HasMaxLength(100)
                 .IsRequired();
 
+            //外键
             builder.HasOne(c => c.Order);
         }
     }
