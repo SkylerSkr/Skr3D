@@ -19,6 +19,13 @@ namespace Skr3D.Application.ViewModels
 
         public List<OrderItemViewModel> Items { get; set; }
 
+        public string Province { get; set; }
+
+        public string City { get; set; }
+
+        public string County { get; set; }
+
+        public string Street { get; set; }
 
 
     }

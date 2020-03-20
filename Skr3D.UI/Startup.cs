@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Skr3D.UI.Extensions;
 
 namespace Skr3D.UI
 {
@@ -26,6 +27,13 @@ namespace Skr3D.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // Automapper ×¢Èë
+            services.AddAutoMapperSetup();
+
+            services.AddMvc();
+
+            NativeInjectorBootStrapper.RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

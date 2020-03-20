@@ -14,9 +14,13 @@ namespace Skr3D.Application.AutoMapper
         /// </summary>
         public DomainToViewModelMappingProfile()
         {
-            CreateMap<Order, OrderViewModel>();
+            CreateMap<Order, OrderViewModel>()
+                .ForPath(d => d.Province, o => o.MapFrom(s => s.Address.Province))
+                .ForPath(d => d.City, o => o.MapFrom(s => s.Address.City))
+                .ForPath(d => d.County, o => o.MapFrom(s => s.Address.County))
+                .ForPath(d => d.Street, o => o.MapFrom(s => s.Address.Street)); ;
+
             CreateMap<OrderItem, OrderItemViewModel>();
-           // CreateMap<OrderItemViewModel, OrderItem>();
 
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Skr3D.Application.ViewModels;
 
 namespace Skr3D.Application.Services
 {
@@ -11,7 +12,7 @@ namespace Skr3D.Application.Services
     /// </summary>
     public interface IOrderAppService : IDisposable
     {
-        //void Register(OrderViewModel OrderViewModel);
-        //IEnumerable<OrderViewModel> GetAll();
+        void Register(OrderViewModel OrderViewModel);
+        IEnumerable<OrderViewModel> GetAll();
     }
 }
