@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using Skr3D.Domain.Core.Commands;
+using Skr3D.Domain.Core.Events;
 
 namespace Skr3D.Domain.Core.Bus
 {
@@ -50,21 +51,21 @@ namespace Skr3D.Domain.Core.Bus
             //return Send(command);//请注意 入参 的类型
         }
 
-        ///// <summary>
-        ///// 引发事件的实现方法
-        ///// </summary>
-        ///// <typeparam name="T">泛型 继承 Event：INotification</typeparam>
-        ///// <param name="event">事件模型，比如StudentRegisteredEvent</param>
-        ///// <returns></returns>
-        //public Task RaiseEvent<T>(T @event) where T : Event
-        //{
-        //    // 除了领域通知以外的事件都保存下来
-        //    if (!@event.MessageType.Equals("DomainNotification"))
-        //        _eventStoreService?.Save(@event);
+        /// <summary>
+        /// 引发事件的实现方法
+        /// </summary>
+        /// <typeparam name="T">泛型 继承 Event：INotification</typeparam>
+        /// <param name="event">事件模型，比如StudentRegisteredEvent</param>
+        /// <returns></returns>
+        public Task RaiseEvent<T>(T @event) where T : Event
+        {
+            //// 除了领域通知以外的事件都保存下来
+            //if (!@event.MessageType.Equals("DomainNotification"))
+            //    _eventStoreService?.Save(@event);
 
-        //    // MediatR中介者模式中的第二种方法，发布/订阅模式
-        //    return _mediator.Publish(@event);
-        //}
+            // MediatR中介者模式中的第二种方法，发布/订阅模式
+            return _mediator.Publish(@event);
+        }
 
 
     }

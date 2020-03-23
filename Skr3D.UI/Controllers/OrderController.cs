@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Skr3D.Application.Services;
 using Skr3D.Application.ViewModels;
+using Skr3D.Domain.EventHandlers.Notifications;
+using Skr3D.Domain.Events.Notifications;
 
 namespace Skr3D.UI.Controllers
 {
@@ -16,10 +19,13 @@ namespace Skr3D.UI.Controllers
     {
         private readonly IOrderAppService _OrderAppService;
 
+        private readonly DomainNotificationHandler _notification;
 
-        public OrderController(IOrderAppService OrderAppService)
+
+        public OrderController(IOrderAppService OrderAppService, INotificationHandler<DomainNotification> notification)
         {
             _OrderAppService = OrderAppService;
+            _notification = (DomainNotificationHandler) notification;
         }
 
         // GET: Order
@@ -48,6 +54,11 @@ namespace Skr3D.UI.Controllers
 
             // 执行添加方法
             _OrderAppService.Register(OrderViewModel);
+
+            if (_notification.HasNotifications())
+            {
+                return _notification.GetNotifications();
+            }
 
             return true;
         }

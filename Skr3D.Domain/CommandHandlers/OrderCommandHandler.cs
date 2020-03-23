@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using MediatR;
 using Skr3D.Domain.Commands.Order;
 using Skr3D.Domain.Core.Bus;
+using Skr3D.Domain.Events;
+using Skr3D.Domain.Events.Notifications;
+using Skr3D.Domain.Events.Order;
 using Skr3D.Domain.Interfaces;
 using Skr3D.Domain.Models;
 
@@ -51,12 +54,24 @@ namespace Skr3D.Domain.CommandHandlers
 
             var Order = new Order(Guid.NewGuid(), message.Name, message.Address, message.OrderItem);
 
+            //返回错误
+            if (Order.Name.Equals("Err"))
+            {
+                Bus.RaiseEvent(new DomainNotification("", "订单名为Err"));
+                return Task.FromResult(new Unit());
+            }
+
 
             // 持久化
             _OrderRepository.Add(Order);
 
-            _OrderRepository.SaveChanges();
 
+            if (_OrderRepository.SaveChanges() > 0)
+            {
+                Bus.RaiseEvent(new RegisterOrderEvent());
+            }
+
+            Bus.RaiseEvent(new DomainNotification("", "Register成功") );
 
             return Task.FromResult(new Unit());
 

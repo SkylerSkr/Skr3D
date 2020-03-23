@@ -50,10 +50,6 @@ namespace Skr3D.Application.Services
 
         public void Register(OrderViewModel OrderViewModel)
         {
-            var order = _mapper.Map<Order>(OrderViewModel);
-            //_OrderRepository.Add(order);
-            //_OrderRepository.SaveChanges();
-
             var registerCommand = _mapper.Map<RegisterOrderCommand>(OrderViewModel);
             Bus.SendCommand(registerCommand);
         }

@@ -11,6 +11,12 @@ using Skr3D.Application.Services;
 using Skr3D.Domain.CommandHandlers;
 using Skr3D.Domain.Commands.Order;
 using Skr3D.Domain.Core.Bus;
+using Skr3D.Domain.EventHandlers;
+using Skr3D.Domain.EventHandlers.Notifications;
+using Skr3D.Domain.EventHandlers.Order;
+using Skr3D.Domain.Events;
+using Skr3D.Domain.Events.Notifications;
+using Skr3D.Domain.Events.Order;
 using Skr3D.Domain.Interfaces;
 using Skr3D.Infrastruct.Data.Context;
 using Skr3D.Infrastruct.Data.Repository;
@@ -34,24 +40,15 @@ namespace Skr3D.UI.Extensions
             services.AddScoped<IMediatorHandler, InMemoryBus>();
 
 
-            // Domain - Events
-            // 将事件模型和事件处理程序匹配注入
-
-            //// 领域通知
-            //services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
-            //// 领域事件
-            //services.AddScoped<INotificationHandler<StudentRegisteredEvent>, StudentEventHandler>();
-            //services.AddScoped<INotificationHandler<StudentUpdatedEvent>, StudentEventHandler>();
-            //services.AddScoped<INotificationHandler<StudentRemovedEvent>, StudentEventHandler>();
-
-
-            //// 领域层 - 领域命令
-            //// 将命令模型和命令处理程序匹配
-            //services.AddScoped<IRequestHandler<RegisterStudentCommand, Unit>, StudentCommandHandler>();
-            //services.AddScoped<IRequestHandler<UpdateStudentCommand, Unit>, StudentCommandHandler>();
-            //services.AddScoped<IRequestHandler<RemoveStudentCommand, Unit>, StudentCommandHandler>();
-
+            // 领域层 - 领域命令
+            // 将命令模型和命令处理程序匹配
             services.AddScoped<IRequestHandler<RegisterOrderCommand, Unit>, OrderCommandHandler>();
+
+            // 领域事件
+            services.AddScoped<INotificationHandler<RegisterOrderEvent>, OrderEventHandler>();
+
+            // 领域通知
+            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
 
             // 领域层 - Memory
