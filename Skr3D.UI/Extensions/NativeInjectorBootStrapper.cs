@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Skr3D.Application.Services;
+using Skr3D.Domain.CommandHandlers;
+using Skr3D.Domain.Commands.Order;
+using Skr3D.Domain.Core.Bus;
 using Skr3D.Domain.Interfaces;
 using Skr3D.Infrastruct.Data.Context;
 using Skr3D.Infrastruct.Data.Repository;
@@ -26,8 +30,8 @@ namespace Skr3D.UI.Extensions
             // 注入 应用层Application
             services.AddScoped<IOrderAppService, OrderAppService>();
 
-            // 命令总线Domain Bus (Mediator)
-            //services.AddScoped<IMediatorHandler, InMemoryBus>();
+            //命令总线Domain Bus(Mediator)
+            services.AddScoped<IMediatorHandler, InMemoryBus>();
 
 
             // Domain - Events
@@ -47,7 +51,7 @@ namespace Skr3D.UI.Extensions
             //services.AddScoped<IRequestHandler<UpdateStudentCommand, Unit>, StudentCommandHandler>();
             //services.AddScoped<IRequestHandler<RemoveStudentCommand, Unit>, StudentCommandHandler>();
 
-            //services.AddScoped<IRequestHandler<RegisterOrderCommand, Unit>, OrderCommandHandler>();
+            services.AddScoped<IRequestHandler<RegisterOrderCommand, Unit>, OrderCommandHandler>();
 
 
             // 领域层 - Memory

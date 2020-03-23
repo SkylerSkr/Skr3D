@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using AutoMapper;
 using Skr3D.Application.ViewModels;
+using Skr3D.Domain.Commands.Order;
+using Skr3D.Domain.Core.Bus;
 using Skr3D.Domain.Models;
 
 namespace Skr3D.Application.Services
@@ -21,14 +23,17 @@ namespace Skr3D.Application.Services
         private readonly IOrderRepository _OrderRepository;
         // 用来进行DTO
         private readonly IMapper _mapper;
+        // 中介者 总线
+        private readonly IMediatorHandler Bus;
 
         public OrderAppService(
             IOrderRepository OrderRepository,
-            IMapper mapper
+            IMapper mapper, IMediatorHandler bus
         )
         {
             _OrderRepository = OrderRepository;
             _mapper = mapper;
+            Bus = bus;
         }
 
         public IEnumerable<OrderViewModel> GetAll()
@@ -46,8 +51,11 @@ namespace Skr3D.Application.Services
         public void Register(OrderViewModel OrderViewModel)
         {
             var order = _mapper.Map<Order>(OrderViewModel);
-            _OrderRepository.Add(order);
-            _OrderRepository.SaveChanges();
+            //_OrderRepository.Add(order);
+            //_OrderRepository.SaveChanges();
+
+            var registerCommand = _mapper.Map<RegisterOrderCommand>(OrderViewModel);
+            Bus.SendCommand(registerCommand);
         }
 
         public void Dispose()

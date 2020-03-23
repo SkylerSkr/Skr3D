@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +33,11 @@ namespace Skr3D.UI
             services.AddAutoMapperSetup();
 
             services.AddMvc();
+
+            // Adding MediatR for Domain Events
+            // 领域命令、领域事件等注入
+            // 引用包 MediatR.Extensions.Microsoft.DependencyInjection
+            services.AddMediatR(typeof(Startup));
 
             NativeInjectorBootStrapper.RegisterServices(services);
         }
